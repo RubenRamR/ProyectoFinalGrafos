@@ -3,11 +3,12 @@ package proyectomapaitson;
 public class Nodo {
 
     String nombre;
-    double peso;
+    double pesoX, pesoY;
 
-    public Nodo(String nombre, double peso) {
+    public Nodo(String nombre, double pesoX, double pesoY) {
         this.nombre = nombre;
-        this.peso = peso;
+        this.pesoX = pesoX;
+        this.pesoY = pesoY;
     }
 
     public void setNombre(String nombre) {
@@ -18,17 +19,25 @@ public class Nodo {
         return nombre;
     }
 
-    public double getPeso() {
-        return peso;
+    public double getPesoX() {
+        return pesoX;
     }
 
-    public void setPeso(double peso) {
-        this.peso = peso;
+    public void setPesoX(double pesoX) {
+        this.pesoX = pesoX;
+    }
+
+    public double getPesoY() {
+        return pesoY;
+    }
+
+    public void setPesoY(double pesoY) {
+        this.pesoY = pesoY;
     }
 
     @Override
     public String toString() {
-        return "Nodo{" + "nombre=" + nombre + ", peso=" + peso + '}';
+        return "Nodo{" + "nombre=" + nombre + ", pesoX=" + pesoX + ", pesoY=" + pesoY + '}';
     }
 
 }

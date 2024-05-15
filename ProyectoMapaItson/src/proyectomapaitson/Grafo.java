@@ -21,7 +21,7 @@ public class Grafo {
     public void agregarArista(Nodo inicio, Nodo fin, double distancia) {
         mapa.get(inicio).add(new Arista(inicio, fin, distancia));
         // Si el grafo es no dirigido, descomenta la línea siguiente
-        //mapa.get(fin).add(new Arista(fin, inicio, distancia));
+        // mapa.get(fin).add(new Arista(fin, inicio, distancia));
     }
 
     public List<Arista> obtenerAristasDeNodo(Nodo nodo) {
@@ -30,6 +30,15 @@ public class Grafo {
 
     public Set<Nodo> obtenerNodos() {
         return mapa.keySet();
+    }
+
+    public List<Arista> obtenerAristas() {
+        List<Arista> aristas = new ArrayList<>();
+        for (List<Arista> listaAristas : mapa.values())
+        {
+            aristas.addAll(listaAristas);
+        }
+        return aristas;
     }
 
     public Map<Nodo, List<Arista>> getMapa() {
@@ -44,5 +53,4 @@ public class Grafo {
     public String toString() {
         return "Grafo{" + "mapa=" + mapa + '}';
     }
-
 }
