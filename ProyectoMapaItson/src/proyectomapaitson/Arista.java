@@ -1,44 +1,28 @@
 package proyectomapaitson;
 
 public class Arista {
-    
-    Nodo inicio;
-    Nodo fin;
-    double distancia;
 
-    public Arista(Nodo inicio, Nodo fin, double distancia) {
-        this.inicio = inicio;
-        this.fin = fin;
-        this.distancia = distancia;
+    private int destino;
+    private int peso;
+
+    public Arista(int destino, int peso) {
+        this.destino = destino;
+        this.peso = peso;
     }
 
-    public Nodo getInicio() {
-        return inicio;
+    public int getDestino() {
+        return destino;
     }
 
-    public void setInicio(Nodo inicio) {
-        this.inicio = inicio;
+    public void setDestino(int destino) {
+        this.destino = destino;
     }
 
-    public Nodo getFin() {
-        return fin;
+    public int getPeso() {
+        return peso;
     }
 
-    public void setFin(Nodo fin) {
-        this.fin = fin;
+    public void setPeso(int peso) {
+        this.peso = peso;
     }
-
-    public double getDistancia() {
-        return distancia;
-    }
-
-    public void setDistancia(double distancia) {
-        this.distancia = distancia;
-    }
-
-    @Override
-    public String toString() {
-        return "Arista{" + "inicio=" + inicio + ", fin=" + fin + ", distancia=" + distancia + '}';
-    }
-
 }

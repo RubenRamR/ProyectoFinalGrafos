@@ -2,42 +2,28 @@ package proyectomapaitson;
 
 public class Nodo {
 
-    String nombre;
-    double pesoX, pesoY;
+    private int nombre;
+    private int peso;
 
-    public Nodo(String nombre, double pesoX, double pesoY) {
+    public Nodo(int nombre, int peso) {
         this.nombre = nombre;
-        this.pesoX = pesoX;
-        this.pesoY = pesoY;
+        this.peso = peso;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getNombre() {
+    // Getters y setters para nombre y peso
+    public int getNombre() {
         return nombre;
     }
 
-    public double getPesoX() {
-        return pesoX;
+    public void setId(int nombre) {
+        this.nombre = nombre;
     }
 
-    public void setPesoX(double pesoX) {
-        this.pesoX = pesoX;
+    public int getPeso() {
+        return peso;
     }
 
-    public double getPesoY() {
-        return pesoY;
+    public void setPeso(int peso) {
+        this.peso = peso;
     }
-
-    public void setPesoY(double pesoY) {
-        this.pesoY = pesoY;
-    }
-
-    @Override
-    public String toString() {
-        return "Nodo{" + "nombre=" + nombre + ", pesoX=" + pesoX + ", pesoY=" + pesoY + '}';
-    }
-
 }

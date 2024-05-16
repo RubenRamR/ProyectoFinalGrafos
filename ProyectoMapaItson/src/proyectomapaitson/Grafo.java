@@ -8,49 +8,69 @@ import java.util.*;
 
 public class Grafo {
 
-    private Map<Nodo, List<Arista>> mapa;
+    private Map<Integer, List<Arista>> nodos;
 
     public Grafo() {
-        this.mapa = new HashMap<>();
+        this.nodos = new HashMap<>();
     }
 
-    public void agregarNodo(Nodo nodo) {
-        mapa.put(nodo, new ArrayList<>());
+    public void agregarNodo(int id) {
+        nodos.putIfAbsent(id, new ArrayList<>());
     }
 
-    public void agregarArista(Nodo inicio, Nodo fin, double distancia) {
-        mapa.get(inicio).add(new Arista(inicio, fin, distancia));
-        // Si el grafo es no dirigido, descomenta la línea siguiente
-        // mapa.get(fin).add(new Arista(fin, inicio, distancia));
+    public void conectarNodos(int origen, int destino, int peso) {
+        nodos.get(origen).add(new Arista(destino, peso));
     }
 
-    public List<Arista> obtenerAristasDeNodo(Nodo nodo) {
-        return mapa.get(nodo);
-    }
+    /*
+    *   Metodo Dijktra
+     */
+    public Map<Integer, Integer> calcularRutaMasCorta(int origen) {
+        Map<Integer, Integer> distancias = new HashMap<>();
+        PriorityQueue<Nodo> colaPrioridad = new PriorityQueue<>(Comparator.comparingInt(Nodo::getPeso));
 
-    public Set<Nodo> obtenerNodos() {
-        return mapa.keySet();
-    }
-
-    public List<Arista> obtenerAristas() {
-        List<Arista> aristas = new ArrayList<>();
-        for (List<Arista> listaAristas : mapa.values())
+        for (int nodo : nodos.keySet())
         {
-            aristas.addAll(listaAristas);
+            distancias.put(nodo, Integer.MAX_VALUE);
         }
-        return aristas;
+        distancias.put(origen, 0);
+        colaPrioridad.add(new Nodo(origen, 0));
+
+        while (!colaPrioridad.isEmpty())
+        {
+            int nodoActual = colaPrioridad.remove().getNombre();
+            List<Arista> aristas = nodos.get(nodoActual);
+
+            for (Arista arista : aristas)
+            {
+                int nuevaDistancia = distancias.get(nodoActual) + arista.getPeso();
+
+                if (nuevaDistancia < distancias.get(arista.getDestino()))
+                {
+                    distancias.put(arista.getDestino(), nuevaDistancia);
+                    colaPrioridad.add(new Nodo(arista.getDestino(), nuevaDistancia));
+                }
+            }
+        }
+
+        return distancias;
     }
 
-    public Map<Nodo, List<Arista>> getMapa() {
-        return mapa;
+    public List<Integer> obtenerNodosVecinos(int idNodo) {
+        List<Integer> nodosVecinos = new ArrayList<>();
+        for (Arista arista : nodos.get(idNodo))
+        {
+            nodosVecinos.add(arista.getDestino());
+        }
+        return nodosVecinos;
     }
 
-    public void setMapa(Map<Nodo, List<Arista>> mapa) {
-        this.mapa = mapa;
+    // Getter y setter para nodos
+    public Map<Integer, List<Arista>> getNodos() {
+        return nodos;
     }
 
-    @Override
-    public String toString() {
-        return "Grafo{" + "mapa=" + mapa + '}';
+    public void setNodos(Map<Integer, List<Arista>> nodos) {
+        this.nodos = nodos;
     }
 }
