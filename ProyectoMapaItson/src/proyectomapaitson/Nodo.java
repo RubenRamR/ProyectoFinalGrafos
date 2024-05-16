@@ -1,29 +1,56 @@
 package proyectomapaitson;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import java.util.List;
+
+import java.util.List;
+
+import java.util.ArrayList;
+
 public class Nodo {
+    private String nombre;
+    private int x;
+    private int y;
+    private List<Arista> vecinos;
 
-    private int nombre;
-    private int peso;
-
-    public Nodo(int nombre, int peso) {
+    public Nodo(String nombre, int x, int y) {
         this.nombre = nombre;
-        this.peso = peso;
+        this.x = x;
+        this.y = y;
+        this.vecinos = new ArrayList<>();
     }
 
-    // Getters y setters para nombre y peso
-    public int getNombre() {
+    public String getNombre() {
         return nombre;
     }
 
-    public void setId(int nombre) {
+    public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
-    public int getPeso() {
-        return peso;
+    public int getX() {
+        return x;
     }
 
-    public void setPeso(int peso) {
-        this.peso = peso;
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public List<Arista> getVecinos() {
+        return vecinos;
+    }
+
+    public void agregarVecino(Nodo nodoDestino, int peso) {
+        vecinos.add(new Arista(nodoDestino.getNombre(), peso));
     }
 }

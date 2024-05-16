@@ -1,54 +1,50 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package proyectomapaitson;
 
 import java.util.*;
 
 public class Grafo {
-
-    private Map<Integer, List<Arista>> nodos;
+    private Map<String, Nodo> nodos;
 
     public Grafo() {
         this.nodos = new HashMap<>();
     }
 
-    public void agregarNodo(int id) {
-        nodos.putIfAbsent(id, new ArrayList<>());
+    public void agregarNodo(String nombre, int x, int y) {
+        nodos.put(nombre, new Nodo(nombre, x, y));
     }
 
-    public void conectarNodos(int origen, int destino, int peso) {
-        nodos.get(origen).add(new Arista(destino, peso));
+    public void conectarNodos(String origen, String destino, int peso) {
+        Nodo nodoOrigen = nodos.get(origen);
+        Nodo nodoDestino = nodos.get(destino);
+        if (nodoOrigen != null && nodoDestino != null) {
+            nodoOrigen.agregarVecino(nodoDestino, peso);
+        } else {
+            System.out.println("Alguno de los nodos no existe.");
+        }
     }
 
-    /*
-    *   Metodo Dijktra
-     */
-    public Map<Integer, Integer> calcularRutaMasCorta(int origen) {
-        Map<Integer, Integer> distancias = new HashMap<>();
+    public Map<String, Integer> calcularRutaMasCorta(String origen) {
+        Map<String, Integer> distancias = new HashMap<>();
         PriorityQueue<Nodo> colaPrioridad = new PriorityQueue<>(Comparator.comparingInt(Nodo::getPeso));
 
-        for (int nodo : nodos.keySet())
-        {
-            distancias.put(nodo, Integer.MAX_VALUE);
+        for (String nombre : nodos.keySet()) {
+            distancias.put(nombre, Integer.MAX_VALUE);
         }
         distancias.put(origen, 0);
-        colaPrioridad.add(new Nodo(origen, 0));
+        colaPrioridad.add(new Nodo(origen, 0, 0)); // Peso 0 para iniciar desde el origen
 
-        while (!colaPrioridad.isEmpty())
-        {
-            int nodoActual = colaPrioridad.remove().getNombre();
-            List<Arista> aristas = nodos.get(nodoActual);
+        while (!colaPrioridad.isEmpty()) {
+            Nodo nodoActual = colaPrioridad.remove();
+            String nombreActual = nodoActual.getNombre();
+            int distanciaActual = distancias.get(nombreActual);
 
-            for (Arista arista : aristas)
-            {
-                int nuevaDistancia = distancias.get(nodoActual) + arista.getPeso();
+            for (Arista arista : nodos.get(nombreActual).getVecinos()) {
+                String destino = arista.getDestino();
+                int nuevaDistancia = distanciaActual + arista.getPeso();
 
-                if (nuevaDistancia < distancias.get(arista.getDestino()))
-                {
-                    distancias.put(arista.getDestino(), nuevaDistancia);
-                    colaPrioridad.add(new Nodo(arista.getDestino(), nuevaDistancia));
+                if (nuevaDistancia < distancias.get(destino)) {
+                    distancias.put(destino, nuevaDistancia);
+                    colaPrioridad.add(new Nodo(destino, nuevaDistancia, 0));
                 }
             }
         }
@@ -56,21 +52,20 @@ public class Grafo {
         return distancias;
     }
 
-    public List<Integer> obtenerNodosVecinos(int idNodo) {
-        List<Integer> nodosVecinos = new ArrayList<>();
-        for (Arista arista : nodos.get(idNodo))
-        {
+    public List<String> obtenerNodosVecinos(String nombreNodo) {
+        List<String> nodosVecinos = new ArrayList<>();
+        for (Arista arista : nodos.get(nombreNodo).getVecinos()) {
             nodosVecinos.add(arista.getDestino());
         }
         return nodosVecinos;
     }
 
     // Getter y setter para nodos
-    public Map<Integer, List<Arista>> getNodos() {
+    public Map<String, Nodo> getNodos() {
         return nodos;
     }
 
-    public void setNodos(Map<Integer, List<Arista>> nodos) {
+    public void setNodos(Map<String, Nodo> nodos) {
         this.nodos = nodos;
     }
 }

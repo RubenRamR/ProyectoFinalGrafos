@@ -2,19 +2,19 @@ package proyectomapaitson;
 
 public class Arista {
 
-    private int destino;
+    private String destino;
     private int peso;
 
-    public Arista(int destino, int peso) {
+    public Arista(String destino, int peso) {
         this.destino = destino;
         this.peso = peso;
     }
 
-    public int getDestino() {
+    public String getDestino() {
         return destino;
     }
 
-    public void setDestino(int destino) {
+    public void setDestino(String destino) {
         this.destino = destino;
     }
 
